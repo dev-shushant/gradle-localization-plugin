@@ -17,12 +17,12 @@ repositories {
 }
 
 gradlePlugin {
-    website = "https://github.com/ysb33r/gradleTest"
-    vcsUrl = "https://github.com/ysb33r/gradleTest.git"
+    website = "https://github.com/ShushantTiwari-ashu/gradle-localization-plugin"
+    vcsUrl = "https://github.com/ShushantTiwari-ashu/gradle-localization-plugin.git"
     plugins {
         create("localizationPlugin") {
             id = "dev.shushant.localization.plugin"
-            implementationClass = "dev.shushant.localization.LocalizationPlugin"
+            implementationClass = "dev.shushant.localization.plugin.LocalizationPlugin"
             displayName = "App localization plugin"
             description = """
         Simplify and streamline the localization process for your Android app with the App Localization Plugin.
@@ -39,6 +39,38 @@ gradlePlugin {
 
         Get started with just a few lines of configuration and unlock the full potential of globalizing your Android app!
     """
+            tags = listOf("localization", "androidApp", "composeSupport")
+        }
+        create("generateAppResourceClass") {
+            id = "dev.shushant.generateAppResourceClass.plugin"
+            implementationClass = "dev.shushant.localization.plugin.GenerateAppResourceClassPlugin"
+            displayName = "Generate app resource classes"
+            description = """
+                Simplify resource management in your Jetpack Compose project with the Generate App Resource Class plugin. This Gradle plugin automates the creation of a Kotlin class that acts as a central hub for accessing application resources such as strings and drawables directly from your Composables.
+
+        Features:
+        - Automatic generation of a Kotlin class with constants for all string resources, allowing easy and type-safe access.
+        - Convenient access to drawable resources through generated extension functions.
+        - Seamless integration into your build process, ensuring the resource class is always up-to-date.
+        - Improved code readability and maintainability by centralizing resource access in a dedicated class.
+
+        How to Use:
+        1. Apply the plugin in your project's build.gradle file.
+        2. Build your project to automatically generate the AppResource class.
+        3. Access strings and drawables directly from your Composables using the generated class.
+
+        Example Usage:
+        ```kotlin
+        // Access string resource
+        val welcomeMessage:String = FileName.welcomeMessage
+
+        // Access drawable resource
+        val appIcon:Painter = FileName.appIcon
+        ```
+
+        Enhance your Compose development workflow by leveraging the Generate App Resource Class plugin. Spend less time managing resources and more time building delightful user interfaces!
+            """.trimIndent()
+            tags = listOf("android", "jetpack", "compose", "resource-management", "string-resources", "drawable-resources", "gradle-plugin")
         }
     }
 }
@@ -57,5 +89,14 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(17)
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "localPluginRepository"
+            url = uri("../local-plugin-repository")
+        }
+    }
 }
 
