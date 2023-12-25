@@ -20,6 +20,9 @@ abstract class LocalizationTask : DefaultTask() {
     var moduleName: String = ""
 
     @get:Input
+    var packageName: String = ""
+
+    @get:Input
     var pathToGenerateSupportedLanguageEnum: String = ""
 
     @TaskAction
@@ -46,18 +49,23 @@ abstract class LocalizationTask : DefaultTask() {
     }
 
     private fun generateLanguageEnum() {
-        val designSystemModule = project.project(moduleName)
-        val outputDir =
-            designSystemModule.projectDir.resolve(pathToGenerateSupportedLanguageEnum)
-        outputDir.mkdirs()
+        pathToGenerateSupportedLanguageEnum.takeIf { it.isNotEmpty() && packageName.isNotEmpty() }?.let {
+            moduleName.takeIf { it.isNotEmpty() }
+            val designSystemModule = if (moduleName.isNotEmpty()) project.project(moduleName) else project
+            val outputDir =
+                designSystemModule.projectDir.resolve(pathToGenerateSupportedLanguageEnum)
+            outputDir.mkdirs()
 
-        val outputFile = File(outputDir, "Language.kt")
-        outputFile.writeText(generateEnumContent())
+            val outputFile = File(outputDir, "Language.kt")
+            outputFile.writeText(generateEnumContent())
+        } ?: run {
+            logger.lifecycle("package name and pathToGenerateSupportedLanguageEnum is must to generate the LanguageEnum ")
+        }
     }
 
     private fun generateEnumContent(): String {
         val enumBuilder = StringBuilder()
-        enumBuilder.append("package com.msil.design_system.utils.language\n\n")
+        enumBuilder.append("package ${packageName}.utils.language\n\n")
         enumBuilder.append("enum class Language(val code : String) {\n")
 
         supportedLang.forEach { lang ->

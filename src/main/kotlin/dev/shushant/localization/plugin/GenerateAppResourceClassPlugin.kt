@@ -17,12 +17,12 @@ class GenerateAppResourceClassPlugin : Plugin<Project> {
                 outputClassFileAppString =
                     File(
                         if (extension.moduleName.isNotEmpty()) project.project(extension.moduleName).projectDir else project.projectDir,
-                        extension.stringFilePathWithFileName
+                        extension.stringFilePathWithFileName.ifEmpty { "src/main/kotlin/AppStrings.kt" }
                     )
                 outputIconClassFile =
                     File(
                         if (extension.moduleName.isNotEmpty()) project.project(extension.moduleName).projectDir else project.projectDir,
-                        extension.iconsFilePathWithFileName
+                        extension.iconsFilePathWithFileName.ifEmpty { "src/main/kotlin/AppIcons.kt" }
                     )
                 packageName = extension.packageNameWhereToGenerateFiles
                 applicationId = extension.applicationId

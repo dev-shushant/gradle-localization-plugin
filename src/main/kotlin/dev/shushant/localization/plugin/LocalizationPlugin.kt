@@ -14,6 +14,7 @@ class LocalizationPlugin : Plugin<Project> {
             project.tasks.register(GENERATE_TRANSLATION_TASK, LocalizationTask::class.java) {
                 supportedLang = extension.supportedLang
                 moduleName = extension.moduleName
+                packageName = extension.packageName
                 pathToGenerateSupportedLanguageEnum = extension.pathToGenerateSupportedLanguageEnum
             }
         project.tasks.named(PRE_BUILD_TASK).get().dependsOn(task)

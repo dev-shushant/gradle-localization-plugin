@@ -28,10 +28,10 @@ abstract class GenerateAppResourcesTask : DefaultTask() {
     var packageName = ""
 
     @get:Input
-    var classNameForStrings = ""
+    var classNameForStrings = "AppStrings"
 
     @get:Input
-    var classNameForIcons = ""
+    var classNameForIcons = "AppIcons"
 
     @get:Input
     var applicationId = ""
