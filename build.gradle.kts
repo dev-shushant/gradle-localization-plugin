@@ -17,7 +17,7 @@ repositories {
 }
 
 gradlePlugin {
-    website = "https://github.com/dev-shushant/gradle-localization-plugin.git"
+    website = "https://www.shushant.dev/"
     vcsUrl = "https://github.com/dev-shushant/gradle-localization-plugin.git"
     plugins {
         create("localizationPlugin") {
