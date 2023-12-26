@@ -5,15 +5,13 @@ plugins {
     id("com.gradle.plugin-publish") version "1.2.1"
     `java-gradle-plugin`
     `kotlin-dsl`
-    `maven-publish`
 }
 
 group = "dev.shushant"
-version = "1.0.0.0"
+version = "1.0"
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 gradlePlugin {
@@ -24,14 +22,16 @@ gradlePlugin {
             id = "dev.shushant.localization.plugin"
             implementationClass = "dev.shushant.localization.plugin.LocalizationPlugin"
             displayName = "App localization plugin"
-            description = "Simplify and streamline the localization process for your Android app with the App Localization Plugin.\n"
+            description =
+                "Simplify and streamline the localization process for your Android app with the App Localization Plugin.\n"
             tags = listOf("localization", "androidApp", "composeSupport")
         }
         create("generateAppResourceClass") {
-            id = "dev.shushant.generateAppResourceClass.plugin"
+            id = "dev.shushant.generate-app-resource-class.plugin"
             implementationClass = "dev.shushant.localization.plugin.GenerateAppResourceClassPlugin"
             displayName = "Generate app resource classes"
-            description = "Simplify resource management in your Jetpack Compose project with the Generate App Resource Class plugin. This Gradle plugin automates the creation of a Kotlin class that acts as a central hub for accessing application resources such as strings and drawables directly from your Composables."
+            description =
+                "Simplify resource management in your Jetpack Compose project with the Generate App Resource Class plugin. This Gradle plugin automates the creation of a Kotlin class that acts as a central hub for accessing application resources such as strings and drawables directly from your Composables."
             tags = listOf(
                 "android",
                 "jetpack",
@@ -59,14 +59,5 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(17)
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "localPluginRepository"
-            url = uri("../local-plugin-repository")
-        }
-    }
 }
 

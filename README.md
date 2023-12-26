@@ -66,7 +66,7 @@ The Generate App Resource Class Plugin simplifies resource management in Jetpack
 1. Apply the plugin in your project's app-level `build.gradle` file.
 ```gradle
 plugins {
-    id 'dev.shushant.generateAppResourceClass.plugin' version 'x.x.x'
+    id 'dev.shushant.generate-app-resource-class.plugin' version 'x.x.x'
 }
 
 //Use this extension to configure the plugin:
