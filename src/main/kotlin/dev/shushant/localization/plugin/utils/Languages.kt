@@ -66,7 +66,6 @@ enum class Languages(val code: String) {
     Slovak("sk"),
     Slovenian("sl"),
     Spanish("es"),
-    SpanishLatinAmerica("es-r419"),
     SpanishArgentina("es-rAR"),
     SpanishChile("es-rCL"),
     SpanishColombia("es-rCO"),

@@ -40,7 +40,7 @@ abstract class GenerateAppResourcesTask : DefaultTask() {
     fun generate() {
         createDirectories()
         val docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-        val designSystemModule = project.project(DESIGN_SYSTEM)
+        val designSystemModule = project
         val mProjDir = File(designSystemModule.layout.projectDirectory.toString())
         val inputFile = File("$mProjDir${GenerateTranslations.PATH_VALUES}${STRINGS_XML}")
         val document = docBuilder.parse(FileInputStream(inputFile))
@@ -71,7 +71,7 @@ abstract class GenerateAppResourcesTask : DefaultTask() {
 
     private fun generateIconsFile() {
         // Generate drawable resources
-        val designSystemModule = project.project(DESIGN_SYSTEM)
+        val designSystemModule = project
         val mProjDir = File(designSystemModule.layout.projectDirectory.toString())
         val drawableDir = File(mProjDir.toString(), "src/main/res/drawable")
         val properties = generateIconProperties(drawableDir)

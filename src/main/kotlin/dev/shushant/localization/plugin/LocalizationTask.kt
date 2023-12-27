@@ -27,7 +27,7 @@ abstract class LocalizationTask : DefaultTask() {
 
     @TaskAction
     fun doTranslate() {
-        val designSystemModule = project.project(moduleName)
+        val designSystemModule = if(moduleName.isEmpty()) project else project.project(moduleName)
         val path = designSystemModule.layout.projectDirectory.toString()
         val originalFile = File(path)
         val translationBuilder = GenerateTranslations
