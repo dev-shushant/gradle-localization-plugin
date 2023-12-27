@@ -3,6 +3,9 @@
 [![GitHub](https://img.shields.io/badge/GitHub-gradle--localization--plugin-blue)](https://github.com/dev-shushant/gradle-localization-plugin)
 
 https://plugins.gradle.org/plugin/dev.shushant.localization.plugin
+
+
+
 https://plugins.gradle.org/plugin/dev.shushant.generate-app-resource-class.plugin
 
 ## Overview
