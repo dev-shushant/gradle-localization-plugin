@@ -2,6 +2,12 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-gradle--localization--plugin-blue)](https://github.com/dev-shushant/gradle-localization-plugin)
 
+https://plugins.gradle.org/plugin/dev.shushant.localization.plugin
+
+
+
+https://plugins.gradle.org/plugin/dev.shushant.generate-app-resource-class.plugin
+
 ## Overview
 
 The Gradle Localization Plugin is a powerful tool designed to simplify and streamline the localization process for Android applications. Whether you're a solo developer or part of a team, this Gradle plugin automates key aspects of localization, offering a seamless integration into your build process. Say goodbye to tedious manual translation management and ensure a consistent user experience across different languages.
