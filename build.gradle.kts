@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "dev.shushant"
-version = "1.0"
+version = "1.0.1-beta01"
 
 repositories {
     mavenCentral()
@@ -46,10 +46,10 @@ gradlePlugin {
 }
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.google.code.gson:gson:2.10.1")
     testImplementation(gradleTestKit())
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

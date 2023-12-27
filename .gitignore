@@ -32,6 +32,7 @@ bin/
 /nbdist/
 /.nb-gradle/
 gradle.properties
+local.properties
 ### VS Code ###
 .vscode/
 
