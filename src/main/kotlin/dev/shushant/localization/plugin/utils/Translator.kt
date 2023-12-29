@@ -1,7 +1,5 @@
 package  dev.shushant.localization.plugin.utils
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import dev.shushant.localization.plugin.models.LocalizationNode
 import okhttp3.OkHttpClient
@@ -43,12 +41,10 @@ object DependencyHelper {
         try {
             val response = client.newCall(request).execute()
             val jsonResponse = response.body?.string()
-            val gson: Gson = GsonBuilder()
-                .setLenient()
-                .create()
-            val input = gson.fromJson(jsonResponse, Array<String>::class.java).firstOrNull()
+
             // Parse JSON using Gson JsonParser
-            return sanitize(input)
+            val jsonArray = JsonParser.parseString(jsonResponse).asJsonArray
+            return sanitize(jsonArray.firstOrNull()?.asString)
         } catch (e: Exception) {
             e.printStackTrace()
         }

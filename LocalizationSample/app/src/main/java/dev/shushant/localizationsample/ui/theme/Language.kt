@@ -1,6 +1,6 @@
-package dev.shushant.localization.plugin.utils
+package dev.shushant.localizationsample.ui.theme
 
-enum class Languages(val code: String) {
+enum class Language(val code : String) {
     Afrikaans("af"),
     Amharic("am"),
     Arabic("ar"),
@@ -86,6 +86,8 @@ enum class Languages(val code: String) {
     SpanishVenezuela("es-rVE"),
     Swahili("sw"),
     Swedish("sv"),
+    SwissGerman("gsw"),
+    Tagalog("tl"),
     Tamil("ta"),
     Telugu("te"),
     Thai("th"),
@@ -93,5 +95,5 @@ enum class Languages(val code: String) {
     Ukrainian("uk"),
     Urdu("ur"),
     Vietnamese("vi"),
-    Zulu("zu")
+    Zulu("zu"),
 }

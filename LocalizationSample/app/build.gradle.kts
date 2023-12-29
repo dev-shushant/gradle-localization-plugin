@@ -25,7 +25,7 @@ android {
     }
 
     localization {
-        supportedLang = Languages.values().filterNot { it.code == "es-r419"  }
+        supportedLang = Languages.values().asList()
         pathToGenerateSupportedLanguageEnum = "src/main/java/dev/shushant/localizationsample/ui/theme"
         packageName = "dev.shushant.localizationsample.ui.theme"
     }
