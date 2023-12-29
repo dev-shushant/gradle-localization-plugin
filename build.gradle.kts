@@ -26,6 +26,16 @@ gradlePlugin {
                 "Simplify and streamline the localization process for your Android app with the App Localization Plugin.\n"
             tags = listOf("localization", "androidApp", "composeSupport")
         }
+        create("encryptionPlugin") {
+            id = "dev.shushant.ndk-encryption"
+            implementationClass = "dev.shushant.localization.plugin.EncryptionPlugin"
+            displayName = "NDK Encryption Plugin"
+            description = """
+        Enhance your Android app's security with the NDK Encryption Plugin.
+        This plugin provides a simple and efficient way to integrate native encryption features into your project.
+    """.trimIndent()
+            tags = listOf("encryption", "androidApp", "ndk", "security")
+        }
         create("generateAppResourceClass") {
             id = "dev.shushant.generate-app-resource-class.plugin"
             implementationClass = "dev.shushant.localization.plugin.GenerateAppResourceClassPlugin"
@@ -58,6 +68,6 @@ tasks.test {
     useJUnitPlatform()
 }
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(19)
 }
 
