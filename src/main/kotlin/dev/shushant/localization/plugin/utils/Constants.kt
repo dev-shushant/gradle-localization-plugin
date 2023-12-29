@@ -7,7 +7,6 @@ const val APP_RESOURCES_EXTENSION = "appResourceExtension"
 const val PRE_BUILD_TASK = "preBuild"
 const val STRINGS_XML = "strings.xml"
 const val STRING_ELEMENT = "string"
-const val DESIGN_SYSTEM = ":design_system"
 const val RESOURCES = "resources"
 const val TRANSLATE_BASE_URL =
     "https://translate.googleapis.com/translate_a/t?client=gtx&dt=t&sl=en&tl="

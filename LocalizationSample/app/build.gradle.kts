@@ -3,8 +3,8 @@ import dev.shushant.localization.plugin.utils.Languages
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("dev.shushant.localization.plugin").version("1.0.2")
-    id("dev.shushant.generate-app-resource-class.plugin").version("1.0.2")
+    id("dev.shushant.localization.plugin").version("1.0.1")
+    //id("dev.shushant.generate-app-resource-class.plugin").version("1.0.2")
 }
 
 android {
@@ -25,8 +25,9 @@ android {
     }
 
     localization {
-        supportedLang = Languages.values().filter { it.code == "es-r419"  }
-        pathToGenerateSupportedLanguageEnum = "src/main/java/dev/shushant/localizationsample/ui/theme/Languages.kt"
+        supportedLang = Languages.values().filterNot { it.code == "es-r419"  }
+        pathToGenerateSupportedLanguageEnum = "src/main/java/dev/shushant/localizationsample/ui/theme"
+        packageName = "dev.shushant.localizationsample.ui.theme"
     }
 
     buildTypes {
