@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "dev.shushant"
-version = "1.0.2"
+version = "1.0.2-beta01"
 
 repositories {
     mavenCentral()
