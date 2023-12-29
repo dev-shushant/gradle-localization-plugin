@@ -1,6 +1,5 @@
 package dev.shushant.localization.plugin
 
-import dev.shushant.localization.plugin.utils.DESIGN_SYSTEM
 import dev.shushant.localization.plugin.utils.GenerateTranslations
 import dev.shushant.localization.plugin.utils.STRINGS_XML
 import org.gradle.api.DefaultTask

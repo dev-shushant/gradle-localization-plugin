@@ -59,13 +59,13 @@ abstract class LocalizationTask : DefaultTask() {
             val outputFile = File(outputDir, "Language.kt")
             outputFile.writeText(generateEnumContent())
         } ?: run {
-            logger.lifecycle("package name and pathToGenerateSupportedLanguageEnum is must to generate the LanguageEnum ")
+            logger.lifecycle("package name and pathToGenerateSupportedLanguageEnum is must to generate the Language Enum ")
         }
     }
 
     private fun generateEnumContent(): String {
         val enumBuilder = StringBuilder()
-        enumBuilder.append("package ${packageName}.utils.language\n\n")
+        enumBuilder.append("package ${packageName}\n\n")
         enumBuilder.append("enum class Language(val code : String) {\n")
 
         supportedLang.forEach { lang ->
