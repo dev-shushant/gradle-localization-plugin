@@ -1,112 +1,136 @@
-# Gradle Localization Plugin
+# 🚀 Shushant's Gradle Plugins
 
-[![GitHub](https://img.shields.io/badge/GitHub-gradle--localization--plugin-blue)](https://github.com/dev-shushant/gradle-localization-plugin)
+[![GitHub](https://img.shields.io/badge/GitHub-Plugin%20Repo-blue)](https://github.com/dev-shushant/gradle-localization-plugin)
 
-https://plugins.gradle.org/plugin/dev.shushant.localization.plugin
+A suite of purpose-built Gradle plugins to enhance Android development — from native encryption to localization and streamlined resource access.
 
+---
 
+## 📦 Available Plugins
 
-https://plugins.gradle.org/plugin/dev.shushant.generate-app-resource-class.plugin
+- [NDK Encryption Plugin](#-ndk-encryption-plugin)
+- [Localization Plugin](#-localization-plugin)
+- [Generate App Resource Class Plugin](#-generate-app-resource-class-plugin)
 
-## Overview
+---
 
-The Gradle Localization Plugin is a powerful tool designed to simplify and streamline the localization process for Android applications. Whether you're a solo developer or part of a team, this Gradle plugin automates key aspects of localization, offering a seamless integration into your build process. Say goodbye to tedious manual translation management and ensure a consistent user experience across different languages.
+<details>
+<summary>🔐 <strong>NDK Encryption Plugin</strong></summary>
 
-## Features
+[![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v?color=blue&label=gradle&metadataUrl=https%3A%2F%2Fplugins.gradle.org%2Fm2%2Fdev%2Fshushant%2Fndk-encryption%2Fdev.shushant.ndk-encryption.gradle.plugin%2Fmaven-metadata.xml)](https://plugins.gradle.org/plugin/dev.shushant.ndk-encryption)
 
-- **Automated Extraction:** Extract translatable strings from your source code and XML resources effortlessly.
-- **Translation Service Integration:** Seamlessly integrate with popular translation services for efficient and accurate translations.
-- **Automatic Resource File Generation:** Streamline your build process to automatically generate localized resource files.
-- **Collaboration Enhancement:** Improve collaboration between developers and translators with clear, standardized workflows.
+Securely manage secrets in native Android code (C++/JNI) — all at build time. Fully configurable, flavor-aware, and CI/CD-friendly.
 
-## Getting Started
+### ✅ Features
 
-1. Apply the plugin in your project's app-level `build.gradle` file.
+- Build-time native secret embedding (C++/JNI)
+- Per-flavor secret configuration
+- Remote secret fetching support
+- Obfuscated C++ logic generation
+- CI/CD integration ready
 
-```gradle
-plugins {
-    id 'dev.shushant.localization.plugin' version 'x.x.x'
-}
-
-//Use this extension to configure the plugin:
-
-localization {
-   // this Languages class is available to choose the supported language.
-        supportedLang = listOf(
-            Languages.Kannada,
-            Languages.Bengali,
-            Languages.Hindi,
-            etc etc...
-        )
-        moduleName = ":moduleName",
-        // these param will generate the list of supported language enum to your codebase
-        pathToGenerateSupportedLanguageEnum = "Language Enum path",
-        packageName = ""
-    }
-```
-
-2. Configure the plugin with your desired settings.
-
-3. Build your project to automatically generate the localized resource files.
-
-4. Unlock the full potential of globalizing your Android app!
-
-
-# Generate App Resource Class Plugin
-
-[![GitHub](https://img.shields.io/badge/GitHub-generateAppResourceClass--plugin-blue)](https://github.com/dev-shushant/gradle-localization-plugin)
-
-## Overview
-
-The Generate App Resource Class Plugin simplifies resource management in Jetpack Compose projects. This Gradle plugin automates the creation of a Kotlin class that serves as a central hub for accessing application resources directly from your Composables.
-
-## Features
-
-- **Automatic Generation:** Generate a Kotlin class with constants for all string resources, ensuring easy and type-safe access.
-- **Drawable Resource Access:** Access drawable resources through generated extension functions.
-- **Seamless Integration:** Integrate seamlessly into your build process to keep the resource class up-to-date.
-- **Code Readability and Maintainability:** Improve code readability and maintainability by centralizing resource access.
-
-## Getting Started
-
-1. Apply the plugin in your project's app-level `build.gradle` file.
-```gradle
-plugins {
-    id 'dev.shushant.generate-app-resource-class.plugin' version 'x.x.x'
-}
-
-//Use this extension to configure the plugin:
-
-appResourceExtension {
-       // provide the path where you want to generate the string resource class file
-        stringFilePathWithFileName = "",
-      // provide the path where you want to generate the drawable resource class file
-        iconsFilePathWithFileName = "",
-      // moduleName
-       moduleName = "",
-      // packageNameWhereToGenerateFiles
-      packageNameWhereToGenerateFiles = "",
-      // to import R file to access resources
-      applicationId ="",
-      classNameForIcons ="AppIcons",
-      classNameForStrings ="AppStrings",
-    }
-```
-
-2. Build your project to automatically generate the AppResource class.
-
-3. Access strings and drawables directly from your Composables using the generated class.
-
-4. Enhance your Compose development workflow by leveraging the Generate App Resource Class plugin.
-
-## Example Usage
+### 🚀 Getting Started
 
 ```kotlin
-// Access string resource as string to use in composables
-val welcomeMessage: String = FileName.welcomeMessage
-
-// Access drawable resource as Painter to use in composables 
-val appIcon: Painter = FileName.appIcon
+plugins {
+    id("dev.shushant.ndk-encryption") version "x.x.x"
+}
 ```
 
-Feel free to explore the respective GitHub repositories for each plugin for more details and updates. If you encounter any issues or have suggestions, please open an issue on the GitHub repository. We appreciate your contributions and feedback!
+</details>
+
+---
+
+<details>
+<summary>🌍 <strong>Localization Plugin</strong></summary>
+
+[![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v?color=blue&label=gradle&metadataUrl=https%3A%2F%2Fplugins.gradle.org%2Fm2%2Fdev%2Fshushant%2Flocalization%2Fplugin%2Fdev.shushant.localization.plugin.gradle.plugin%2Fmaven-metadata.xml)](https://plugins.gradle.org/plugin/dev.shushant.localization.plugin)
+
+Automate localization for Android apps with resource extraction, translation service integration, and enum generation for supported languages.
+
+### ✅ Features
+
+- Extract translatable strings from XML/code
+- Generate localized resource files
+- Integrate with translation services
+- Generate enums for supported languages
+
+### 🚀 Getting Started
+
+```kotlin
+plugins {
+    id("dev.shushant.localization.plugin") version "x.x.x"
+}
+
+localization {
+    supportedLang = listOf(
+        Languages.Kannada,
+        Languages.Bengali,
+        Languages.Hindi,
+        // ...
+    )
+    moduleName = ":yourModule"
+    pathToGenerateSupportedLanguageEnum = "your/path"
+    packageName = "your.package"
+}
+```
+
+</details>
+
+---
+
+<details>
+<summary>🧩 <strong>Generate App Resource Class Plugin</strong></summary>
+
+[![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v?color=blue&label=gradle&metadataUrl=https%3A%2F%2Fplugins.gradle.org%2Fm2%2Fdev%2Fshushant%2Fgenerate-app-resource-class%2Fplugin%2Fdev.shushant.generate-app-resource-class.plugin.gradle.plugin%2Fmaven-metadata.xml)](https://plugins.gradle.org/plugin/dev.shushant.generate-app-resource-class.plugin)
+
+Generate Kotlin classes for accessing string and drawable resources in Jetpack Compose — with clean, type-safe APIs.
+
+### ✅ Features
+
+- Kotlin class generation for string and drawable access
+- Extension functions for drawables
+- Centralized, type-safe resource management
+- Compose-optimized integration
+
+### 🚀 Getting Started
+
+```kotlin
+plugins {
+    id("dev.shushant.generate-app-resource-class.plugin") version "x.x.x"
+}
+
+appResourceExtension {
+    stringFilePathWithFileName = "your/path/Strings.kt"
+    iconsFilePathWithFileName = "your/path/Icons.kt"
+    moduleName = ":yourModule"
+    packageNameWhereToGenerateFiles = "your.package"
+    applicationId = "your.app.id"
+    classNameForIcons = "AppIcons"
+    classNameForStrings = "AppStrings"
+}
+```
+
+### 📘 Example Usage
+
+```kotlin
+val welcomeMessage: String = AppStrings.welcomeMessage
+val appIcon: Painter = AppIcons.appIcon
+```
+
+</details>
+
+---
+
+## 🤝 Contributions & Feedback
+
+Found a bug? Have a suggestion?  
+Open an issue or submit a pull request via [GitHub](https://github.com/dev-shushant/gradle-localization-plugin).
+
+We welcome feedback, ideas, and contributions from the community.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
