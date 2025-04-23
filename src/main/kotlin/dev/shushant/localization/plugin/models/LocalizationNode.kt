@@ -1,17 +1,21 @@
 package dev.shushant.localization.plugin.models
 
 
-data class LocalizationNode(
-    val name:String = "",
-    val value:String = "",
-    val type: NodeType = NodeType.STRING,
-    val cleanValue: String,      // Text with placeholders removed or masked for translation
-    val placeholders: List<String> = emptyList(), // %1$s etc.
-    val isPlural: Boolean = false,
-    val quantity: String? = null // one, few, many, other etc. (only for plurals)
-)
-
-enum class NodeType {
+enum class ResourceType {
     STRING,
-    STRING_ARRAY
+    STRING_ARRAY,
+    PLURALS
 }
+
+
+data class LocalizationNode(
+    val name: String,
+    val originalValue: String,
+    val cleanValue: String,
+    val isPlural: Boolean = false,
+    val quantity: String? = null, // only for plurals
+    val index: Int? = null,       // only for string-array
+    val type: ResourceType,
+    val value: String = originalValue, // default to original value
+    val placeholders: Map<String, String> = emptyMap() // new field
+)

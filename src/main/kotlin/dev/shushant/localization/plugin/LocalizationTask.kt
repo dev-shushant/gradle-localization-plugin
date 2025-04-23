@@ -1,9 +1,13 @@
 package dev.shushant.localization.plugin
 
-import dev.shushant.localization.plugin.models.NodeType
+import dev.shushant.localization.plugin.models.ResourceType
+import dev.shushant.localization.plugin.utils.DependencyHelper.client
 import dev.shushant.localization.plugin.utils.GenerateTranslations
+import dev.shushant.localization.plugin.utils.GoogleTranslator
 import dev.shushant.localization.plugin.utils.Languages
+import dev.shushant.localization.plugin.utils.LibreTranslator
 import dev.shushant.localization.plugin.utils.Translator
+import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -27,20 +31,23 @@ abstract class LocalizationTask : DefaultTask() {
     var pathToGenerateSupportedLanguageEnum: String = ""
 
     @TaskAction
-    fun doTranslate() {
+    fun doTranslate() = runBlocking {
         val designSystemModule = if (moduleName.isEmpty()) project else project.project(moduleName)
         val path = designSystemModule.layout.projectDirectory.toString()
         val originalFile = File(path)
-        val translationBuilder = GenerateTranslations
-            .Builder(originalFile)
-            .build()
+        val translationBuilder = GenerateTranslations.Builder(originalFile).build()
+
         if (translationBuilder.isModified()) {
             translationBuilder.saveCurrentHash()
             val listOfStrings = translationBuilder.listElements()
-                .filter { it.type == NodeType.STRING }
+                .filter { it.type == ResourceType.STRING }
+
             val translator = Translator.Builder()
-                .addNodes(listOfStrings)
+                .addNodes(listOfStrings) // 👈 Passes the nodes here
+                .addService(GoogleTranslator(client))
+                .addService(LibreTranslator(client))
                 .build()
+
             supportedLang.forEach { lang ->
                 println("Generating localization for: ${lang.code.uppercase()} $flavourType")
                 val translated = translator.translate(lang.code)

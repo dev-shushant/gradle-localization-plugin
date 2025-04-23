@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "dev.shushant"
-version = "1.0.3-alpha"
+version = "1.0.3-beta02"
 
 repositories {
     mavenCentral()
@@ -62,6 +62,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0") // or latest
 }
 
 tasks.test {

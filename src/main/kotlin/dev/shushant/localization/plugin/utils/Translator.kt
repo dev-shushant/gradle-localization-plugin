@@ -1,64 +1,76 @@
 package  dev.shushant.localization.plugin.utils
 
-import com.google.gson.JsonParser
 import dev.shushant.localization.plugin.models.LocalizationNode
-import dev.shushant.localization.plugin.models.NodeType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import okhttp3.OkHttpClient
-import okhttp3.Request
 
-class Translator private constructor(builder: Builder) {
-    private val nodes: List<LocalizationNode> = builder.nodes
-
+class Translator private constructor(
+    private val nodes: List<LocalizationNode>,
+    private val services: List<TranslatorService>
+) {
     class Builder {
-        val nodes = mutableListOf<LocalizationNode>()
-        fun addNodes(nodeList: List<LocalizationNode>): Builder {
-            nodes.addAll(nodeList)
-            return this
+        private var nodes: List<LocalizationNode> = emptyList()
+        private val services: MutableList<TranslatorService> = mutableListOf()
+
+        fun addNodes(nodes: List<LocalizationNode>) = apply {
+            this.nodes = nodes
         }
 
-        fun build(): Translator = Translator(this)
+        fun addService(service: TranslatorService) = apply {
+            services.add(service)
+        }
+
+        fun build(): Translator {
+            return Translator(nodes, services)
+        }
     }
 
-    fun translate(lang: String): List<LocalizationNode> {
-        val translatedNodes = mutableListOf<LocalizationNode>()
-        for (node in nodes) {
-            val translatedValue = DependencyHelper.getTranslation(lang, node.value)
-            translatedNodes.add(LocalizationNode(node.name, translatedValue ?: node.value))
+    suspend fun translate(targetLang: String): List<LocalizationNode> = coroutineScope {
+        nodes.map { node ->
+            async(Dispatchers.IO) {
+                translateNode(node, targetLang)
+            }
+        }.awaitAll()
+    }
+
+    private suspend fun translateNode(
+        node: LocalizationNode,
+        targetLang: String
+    ): LocalizationNode {
+        services.forEach { service ->
+            val translation = service.translate(node.cleanValue, sourceLang = "en", targetLang)
+            if (!translation.isNullOrBlank()) {
+                val restored = restorePlaceholders(translation, node.placeholders)
+                return node.copy(value = restored)
+            }
         }
-        return translatedNodes
+        return node
+    }
+
+    fun restorePlaceholders(translatedText: String, placeholders: Map<String, String>): String {
+        var result = translatedText
+        placeholders.forEach { (token, originalPlaceholder) ->
+            result = result.replace(token, originalPlaceholder)
+        }
+        return result
     }
 }
 
-
 object DependencyHelper {
-    private val client = OkHttpClient()
+    val client = OkHttpClient.Builder()
+        .callTimeout(10_000, java.util.concurrent.TimeUnit.MILLISECONDS)
+        .build()
 
-    fun getTranslation(lang: String, text: String): String? {
-        val urlString =
-            "$TRANSLATE_BASE_URL$lang&q=$text"
-        val request = Request.Builder()
-            .url(urlString)
-            .build()
-        try {
-            val response = client.newCall(request).execute()
-            val jsonResponse = response.body?.string()
-
-            // Parse JSON using Gson JsonParser
-            val jsonArray = JsonParser.parseString(jsonResponse).asJsonArray
-            return sanitize(jsonArray.firstOrNull()?.asString)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    private fun sanitize(input: String?): String? {
+    fun sanitize(input: String?): String? {
         return input?.replace("&", "&amp;")
-            ?.replace("<", " &lt;")
-            ?.replace(">", " &gt;")
-            ?.replace("\"", " &quot;")
-            ?.replace("'", " &apos;")
-            ?.replace("\u0022", " &quot;") // Unicode escape for double quote
-            ?.replace("\u0027", " &apos;") // Unicode escape for single quote
+            ?.replace("<", "&lt;")
+            ?.replace(">", "&gt;")
+            ?.replace("\"", "&quot;")
+            ?.replace("'", "&apos;")
+            ?.replace("\u0022", "&quot;")
+            ?.replace("\u0027", "&apos;")
     }
 }
