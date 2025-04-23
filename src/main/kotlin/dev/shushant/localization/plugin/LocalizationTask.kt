@@ -1,5 +1,6 @@
 package dev.shushant.localization.plugin
 
+import dev.shushant.localization.plugin.models.NodeType
 import dev.shushant.localization.plugin.utils.GenerateTranslations
 import dev.shushant.localization.plugin.utils.Languages
 import dev.shushant.localization.plugin.utils.Translator
@@ -27,7 +28,7 @@ abstract class LocalizationTask : DefaultTask() {
 
     @TaskAction
     fun doTranslate() {
-        val designSystemModule = if(moduleName.isEmpty()) project else project.project(moduleName)
+        val designSystemModule = if (moduleName.isEmpty()) project else project.project(moduleName)
         val path = designSystemModule.layout.projectDirectory.toString()
         val originalFile = File(path)
         val translationBuilder = GenerateTranslations
@@ -36,6 +37,7 @@ abstract class LocalizationTask : DefaultTask() {
         if (translationBuilder.isModified()) {
             translationBuilder.saveCurrentHash()
             val listOfStrings = translationBuilder.listElements()
+                .filter { it.type == NodeType.STRING }
             val translator = Translator.Builder()
                 .addNodes(listOfStrings)
                 .build()
@@ -49,16 +51,18 @@ abstract class LocalizationTask : DefaultTask() {
     }
 
     private fun generateLanguageEnum() {
-        pathToGenerateSupportedLanguageEnum.takeIf { it.isNotEmpty() && packageName.isNotEmpty() }?.let {
-            moduleName.takeIf { it.isNotEmpty() }
-            val designSystemModule = if (moduleName.isNotEmpty()) project.project(moduleName) else project
-            val outputDir =
-                designSystemModule.projectDir.resolve(pathToGenerateSupportedLanguageEnum)
-            outputDir.mkdirs()
+        pathToGenerateSupportedLanguageEnum.takeIf { it.isNotEmpty() && packageName.isNotEmpty() }
+            ?.let {
+                moduleName.takeIf { it.isNotEmpty() }
+                val designSystemModule =
+                    if (moduleName.isNotEmpty()) project.project(moduleName) else project
+                val outputDir =
+                    designSystemModule.projectDir.resolve(pathToGenerateSupportedLanguageEnum)
+                outputDir.mkdirs()
 
-            val outputFile = File(outputDir, "Language.kt")
-            outputFile.writeText(generateEnumContent())
-        } ?: run {
+                val outputFile = File(outputDir, "Language.kt")
+                outputFile.writeText(generateEnumContent())
+            } ?: run {
             logger.lifecycle("package name and pathToGenerateSupportedLanguageEnum is must to generate the Language Enum ")
         }
     }

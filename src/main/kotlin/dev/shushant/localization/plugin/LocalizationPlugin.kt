@@ -16,7 +16,10 @@ class LocalizationPlugin : Plugin<Project> {
                 moduleName = extension.moduleName
                 packageName = extension.packageName
                 pathToGenerateSupportedLanguageEnum = extension.pathToGenerateSupportedLanguageEnum
+
+                notCompatibleWithConfigurationCache("Uses project reference in execution")
             }
         project.tasks.named(PRE_BUILD_TASK).get().dependsOn(task)
+
     }
 }

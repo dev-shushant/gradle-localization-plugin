@@ -46,6 +46,7 @@ enum class Languages(val code: String) {
     Indonesian("id"),
     Italian("it"),
     Japanese("ja"),
+    Konkani("kok"),
     Kannada("kn"),
     Korean("ko"),
     Lao("lo"),

@@ -2,6 +2,7 @@ package  dev.shushant.localization.plugin.utils
 
 import com.google.gson.JsonParser
 import dev.shushant.localization.plugin.models.LocalizationNode
+import dev.shushant.localization.plugin.models.NodeType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 

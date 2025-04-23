@@ -1,6 +1,7 @@
 package dev.shushant.localization.plugin.utils
 
 import dev.shushant.localization.plugin.models.LocalizationNode
+import dev.shushant.localization.plugin.models.NodeType
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import java.io.File
@@ -14,7 +15,7 @@ import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 
 class GenerateTranslations private constructor(builder: Builder) {
-    private val mProjDir: File
+    private val mProjDir: File = builder.projDir
     private val mStringsFile: File
     private val mOriginalXmlFile: File
     private val mDocument: Document?
@@ -25,7 +26,6 @@ class GenerateTranslations private constructor(builder: Builder) {
     }
 
     init {
-        mProjDir = builder.projDir
         mStringsFile = File("${mProjDir}$PATH_VALUES$STRINGS_XML")
         mOriginalXmlFile = File("${mProjDir}$PATH_VALUES$STRINGS_XML")
 
@@ -53,8 +53,15 @@ class GenerateTranslations private constructor(builder: Builder) {
                 val nodes = doc.documentElement.childNodes
                 list.addAll((0 until nodes.length).mapNotNull { nodes.item(it) as? Element }.map {
                     val name = it.getAttribute("name")
-                    val value = it.textContent
-                    LocalizationNode(name, value)
+                    val value = it.textContent.trim()
+
+                    val nodeType = when (it.tagName) {
+                        "string" -> NodeType.STRING
+                        "string-array" -> NodeType.STRING_ARRAY
+                        else -> NodeType.STRING // Default fallback
+                    }
+
+                    LocalizationNode(name, value, nodeType)
                 })
             }
         } catch (ex: Exception) {
@@ -62,6 +69,8 @@ class GenerateTranslations private constructor(builder: Builder) {
         }
         return list
     }
+
+
 
     // Modification detection
     fun isModified(): Boolean {
