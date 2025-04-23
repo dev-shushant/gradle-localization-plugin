@@ -45,5 +45,6 @@ open class EncryptionExtension {
     val secrets: Map<String, String> = emptyMap()
     var generateNativeCpp: Boolean = false
     var cppPackageName: String = ""
+    var secretsUrl: String = ""
     internal var outputDir: String = "src/main/cpp"
 }
